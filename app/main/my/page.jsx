@@ -25,7 +25,7 @@ function QuickMenu({ icon, text }) {
 }
 
 // --- (이제 My 컴포넌트 시작) ---
-const My = () => {
+const Page = () => {
   const { isLoggedIn, user } = useAuth();
   const router = useRouter();
 
@@ -198,4 +198,4 @@ const My = () => {
   );
 };
 
-export default My;
+export default Page;

@@ -32,7 +32,7 @@ const MainHeader = () => {
             <Link href={"/main/myreservation"}>나의 예약</Link>
           </li>
           <li>
-            <Link href={"/main/faq"}>고객센터</Link>
+            <Link href={"/main/faq"}>상담 톡</Link>
           </li>
           <li>
             <Link href={"/main/community"}>커뮤니티</Link>

@@ -152,7 +152,7 @@ const Page = () => {
                 />
               </div>
               {/* 전화번호 */}
-              <div className="text-sm text-gray-900 mt-5">전화번호 </div>
+              <div className="text-sm text-gray-900 mt-5">전화번호 * </div>
               <div className="relative flex items-center">
                 <Phone className="absolute left-3  text-gray-400" size={20} />
                 <input
