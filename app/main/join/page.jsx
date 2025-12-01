@@ -40,6 +40,10 @@ const Page = () => {
       alert("비밀번호가 일치하지 않습니다.");
       return;
     }
+    if (!phone.trim()) {
+      alert("전화번호는 필수 입력 항목입니다.");
+      return;
+    }
 
     try {
       // 4. '뇌' (API)에게 데이터를 전송

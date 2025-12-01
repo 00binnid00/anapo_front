@@ -1,23 +1,28 @@
 "use client";
 import { useState, useEffect } from "react";
 import { Search, Pin, Edit, Trash2, Plus } from "lucide-react";
+import NewNotice from "@/components/hospital/NewNotice";
+import EditNotice from "@/components/hospital/EditNotice";
 
 const Notice = () => {
   const [notices, setNotices] = useState([]);
   const [search, setSearch] = useState("");
 
-  /*
-    📌 Spring 백엔드 연동 예정 구간
+  // 새 공지 모달
+  const [openCreateModal, setOpenCreateModal] = useState(false);
+
+  // 수정 모달
+  const [openEditModal, setOpenEditModal] = useState(false);
+  const [selectedNotice, setSelectedNotice] = useState(null);
+
+  /* 📌 Spring 연동 예정
     useEffect(() => {
       fetch("/api/notices")
         .then(res => res.json())
         .then(data => setNotices(data));
     }, []);
-
-    // POST / PUT / DELETE API도 여기에서 연결 가능
   */
 
-  // 현재는 Mock 데이터
   useEffect(() => {
     setNotices([
       {
@@ -61,16 +66,38 @@ const Notice = () => {
     ]);
   }, []);
 
-  // 검색 필터
   const filteredNotices = notices.filter((n) =>
     `${n.title} ${n.content}`.toLowerCase().includes(search.toLowerCase())
   );
 
-  // 상태 배지 스타일
-  const statusBadge = (status) => {
-    if (status === "게시중")
-      return "bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm";
-    return "bg-gray-200 text-gray-600 px-3 py-1 rounded-full text-sm";
+  const statusBadge = (status) =>
+    status === "게시중"
+      ? "bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm"
+      : "bg-gray-200 text-gray-600 px-3 py-1 rounded-full text-sm";
+
+  // ⭐ 핀 토글 기능
+  const togglePin = (id) => {
+    setNotices((prev) =>
+      prev.map((n) => (n.id === id ? { ...n, pinned: !n.pinned } : n))
+    );
+  };
+
+  // ⭐ 공지 삭제 기능
+  const deleteNotice = (id) => {
+    if (!confirm("정말 삭제하시겠습니까?")) return;
+
+    setNotices((prev) => prev.filter((n) => n.id !== id));
+
+    /* 📌 Spring DELETE 연동
+      fetch(`/api/notices/${id}`, { method: "DELETE" })
+        .then(() => setNotices(prev => prev.filter(n => n.id !== id)));
+    */
+  };
+
+  // ⭐ 수정 아이콘 클릭 → 수정 모달 열기
+  const openEdit = (notice) => {
+    setSelectedNotice(notice);
+    setOpenEditModal(true);
   };
 
   return (
@@ -84,7 +111,11 @@ const Notice = () => {
           </p>
         </div>
 
-        <button className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+        {/* 새 공지 */}
+        <button
+          className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+          onClick={() => setOpenCreateModal(true)}
+        >
           <Plus size={18} /> 새 공지사항
         </button>
       </div>
@@ -103,21 +134,18 @@ const Notice = () => {
         </div>
       </div>
 
-      {/* 공지 리스트 */}
+      {/* 리스트 */}
       <div className="space-y-4">
         {filteredNotices.map((n) => (
           <div
             key={n.id}
             className="bg-white p-5 rounded-xl shadow flex justify-between items-start"
           >
-            {/* 왼쪽 내용 */}
             <div>
               <div className="flex items-center gap-2 mb-1">
-                {/* 고정 아이콘 */}
                 {n.pinned && (
                   <Pin size={20} className="text-blue-500" fill="#3b82f6" />
                 )}
-
                 <h2 className="text-lg font-semibold">{n.title}</h2>
               </div>
 
@@ -130,38 +158,67 @@ const Notice = () => {
               </div>
             </div>
 
-            {/* 오른쪽 아이콘 그룹 */}
+            {/* 오른쪽 버튼들 */}
             <div className="flex items-center gap-3">
-              {/* 상태 배지 */}
               <span className={statusBadge(n.status)}>{n.status}</span>
 
-              {/* 고정 아이콘 */}
+              {/* 핀 토글 */}
               <Pin
                 size={18}
                 className="text-gray-600 hover:text-black cursor-pointer"
+                onClick={() => togglePin(n.id)}
               />
 
               {/* 수정 */}
               <Edit
                 size={18}
                 className="text-gray-600 hover:text-black cursor-pointer"
+                onClick={() => openEdit(n)}
               />
 
               {/* 삭제 */}
               <Trash2
                 size={18}
                 className="text-red-500 hover:text-red-700 cursor-pointer"
+                onClick={() => deleteNotice(n.id)}
               />
-
-              {/*
-                📌 삭제 기능: Spring 연결
-                fetch(`/api/notices/${n.id}`, { method: "DELETE" })
-                  .then(() => setNotices(prev => prev.filter(item => item.id !== n.id)));
-              */}
             </div>
           </div>
         ))}
       </div>
+
+      {/* 새 공지 모달 */}
+      {openCreateModal && (
+        <NewNotice
+          onClose={() => setOpenCreateModal(false)}
+          onSubmit={(newNotice) => {
+            setNotices((prev) => [...prev, newNotice]);
+            setOpenCreateModal(false);
+          }}
+        />
+      )}
+
+      {/* ⭐ 수정 모달 */}
+      {openEditModal && selectedNotice && (
+        <EditNotice
+          notice={selectedNotice}
+          onClose={() => setOpenEditModal(false)}
+          onSubmit={(updated) => {
+            setNotices((prev) =>
+              prev.map((n) => (n.id === updated.id ? updated : n))
+            );
+            setOpenEditModal(false);
+
+            /* 📌 Spring PUT 연동
+              fetch(`/api/notices/${updated.id}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(updated)
+              })
+            */
+          }}
+        />
+      )}
     </div>
   );
 };

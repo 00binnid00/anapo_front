@@ -56,7 +56,7 @@ export default function Sidebar() {
     {
       name: "통계 및 리포트",
       icon: <FileBarChart2 size={20} />,
-      href: "/userhospital/reports",
+      href: "/userhospital/reportmanagement",
     },
   ];
 
@@ -90,7 +90,7 @@ export default function Sidebar() {
 
       <Link
         href="/userhospital/setting"
-        className="flex items-center gap-3 text-gray-300 hover:text-white mt-10"
+        className="flex items-center gap-3 text-gray-300 hover:text-white mt-45 ml-30"
       >
         <Settings size={20} />
         설정

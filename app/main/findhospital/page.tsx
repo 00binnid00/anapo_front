@@ -2,7 +2,16 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Search, MapPin, Star, Phone, Clock, X, ArrowLeft } from "lucide-react";
+import {
+  Search,
+  MapPin,
+  Star,
+  Phone,
+  Clock,
+  X,
+  ArrowLeft,
+  Heart,
+} from "lucide-react";
 import KakaoMap from "@/components/KakaoMap";
 import Image from "next/image";
 import Link from "next/link";
@@ -205,7 +214,7 @@ export default function FindHospitalPage() {
                       {hospital.name}
                     </h4>
                     <div className="flex items-center gap-1">
-                      <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                      <Heart className="w-4 h-4 fill-red-400 text-red-400" />
                       {/* ✅ 별점 숫자 색상 */}
                       <span className="font-semibold text-sm text-gray-900">
                         {hospital.rating}
@@ -244,7 +253,7 @@ export default function FindHospitalPage() {
                       {selectedHospital.name}
                     </h2>
                     <div className="flex items-center gap-1">
-                      <Star className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+                      <Heart className="w-5 h-5 fill-red-400 text-red-400" />
                       {/* ✅ 상세 뷰 별점 숫자 색상 */}
                       <span className="font-semibold text-gray-900">
                         {selectedHospital.rating}
