@@ -56,7 +56,7 @@ export default function Sidebar() {
     {
       name: "통계 및 리포트",
       icon: <FileBarChart2 size={20} />,
-      href: "/userhospital/reportmanagement",
+      href: "/userhospital/reportManagement",
     },
   ];
 
