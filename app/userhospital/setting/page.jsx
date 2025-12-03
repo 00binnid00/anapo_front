@@ -8,7 +8,7 @@ import NotificationTab from "@/components/hospital/setting/NotificationTab";
 // import SystemTab from "@/components/hospital/setting/SystemTab";
 
 export default function SettingPage() {
-  const [tab, setTab] = useState("profile");
+  const [tab, setTab] = useState("security");
 
   return (
     <div className="flex gap-8 p-10 bg-gray-100 min-h-screen">
@@ -19,7 +19,7 @@ export default function SettingPage() {
 
       {/* 오른쪽 콘텐츠 */}
       <div className="flex-1">
-        {tab === "profile" && <ProfileTab />}
+        {/* {tab === "profile" && <ProfileTab />} */}
         {tab === "security" && <SecurityTab />}
         {tab === "notification" && <NotificationTab />}
         {/* {tab === "system" && <SystemTab />} */}

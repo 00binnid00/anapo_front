@@ -5,7 +5,7 @@ export default function SelectField({ label, value, onChange, children }) {
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full border rounded-lg p-2 text-sm"
+        className="w-full border rounded-lg p-2 text-sm  focus:outline-indigo-500"
       >
         {children}
       </select>

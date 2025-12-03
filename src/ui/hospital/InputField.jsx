@@ -6,7 +6,7 @@ export default function InputField({ label, value, onChange, type = "text" }) {
         type={type}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full border rounded-lg p-2 text-sm"
+        className="w-full border rounded-lg p-2 text-sm  focus:outline-indigo-500"
       />
     </div>
   );

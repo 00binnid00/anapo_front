@@ -16,7 +16,41 @@ export default function PatientCreateModal({
   const update = (key, value) => setForm(key, value);
 
   const handleSubmit = () => {
+    // ------------------------------
+    // ⚠️ 필수 입력값 체크 (프론트 유효성 검사)
+    // ------------------------------
+    if (!form.name?.trim()) {
+      alert("이름을 입력해주세요.");
+      return;
+    }
+    if (!form.gender) {
+      alert("성별을 선택해주세요.");
+      return;
+    }
+    if (!form.birth) {
+      alert("생년월일을 선택해주세요.");
+      return;
+    }
+    if (!form.phone?.trim()) {
+      alert("전화번호를 입력해주세요.");
+      return;
+    }
+    if (!form.subPhone?.trim()) {
+      alert("비상 연락처를 입력해주세요.");
+      return;
+    }
+    if (!form.email?.trim()) {
+      alert("이메일을 입력해주세요.");
+      return;
+    }
+    if (!form.address?.trim()) {
+      alert("주소를 입력해주세요.");
+      return;
+    }
+
+    // ------------------------------
     // 나이 계산
+    // ------------------------------
     let age = "";
     if (form.birth) {
       const birthYear = Number(form.birth.split("-")[0]);
@@ -29,6 +63,11 @@ export default function PatientCreateModal({
       age,
       regDate: new Date().toISOString().slice(0, 10),
     };
+
+    // ------------------------------
+    // ⚠️ 나중에 Spring 백엔드 연동할 때 이곳에서 POST 요청
+    // fetch("/api/patient/create", { method: "POST", body: JSON.stringify(payload) })
+    // ------------------------------
 
     onSubmit(payload);
   };
@@ -49,7 +88,7 @@ export default function PatientCreateModal({
             <div className="mt-6">
               <h3 className="font-semibold mb-3">기본 정보</h3>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 gap-4 ">
                 <InputField
                   label="이름 *"
                   value={form.name}
@@ -90,13 +129,13 @@ export default function PatientCreateModal({
                   onChange={(v) => update("phone", v)}
                 />
                 <InputField
-                  label="비상연락처"
+                  label="비상연락처 *"
                   value={form.subPhone}
                   placeholder="010-0000-0000"
                   onChange={(v) => update("subPhone", v)}
                 />
                 <InputField
-                  label="이메일"
+                  label="이메일 *"
                   value={form.email}
                   placeholder="email@example.com"
                   onChange={(v) => update("email", v)}
@@ -121,7 +160,7 @@ export default function PatientCreateModal({
                 기존 병력 및 특이사항
               </label>
               <textarea
-                className="w-full border rounded-lg p-2 h-28 text-sm"
+                className="w-full border rounded-lg p-2 h-28 text-sm  focus:outline-indigo-500"
                 placeholder="알레르기, 기존 질병, 복용 중인 약 등"
                 value={form.history}
                 onChange={(e) => update("history", e.target.value)}

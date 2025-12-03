@@ -4,7 +4,7 @@ import { User, Lock, Bell, Database } from "lucide-react";
 
 export default function SettingSidebar({ tab, setTab }) {
   const menus = [
-    { key: "profile", name: "프로필", icon: <User size={20} /> },
+    // { key: "profile", name: "프로필", icon: <User size={20} /> },
     { key: "security", name: "보안", icon: <Lock size={20} /> },
     { key: "notification", name: "알림", icon: <Bell size={20} /> },
     // { key: "system", name: "시스템", icon: <Database size={20} /> },

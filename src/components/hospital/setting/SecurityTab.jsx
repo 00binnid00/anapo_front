@@ -36,16 +36,16 @@ export default function SecurityTab() {
           <label className="text-sm text-gray-500">현재 비밀번호</label>
           <input
             type="password"
-            className="w-full border rounded-lg p-2 mt-1"
+            className="w-full border rounded-lg p-2 mt-1  focus:outline-indigo-500"
             onChange={(e) => update("currentPass", e.target.value)}
           />
         </div>
 
         <div>
-          <label className="text-sm text-gray-500">새 비밀번호</label>
+          <label className="text-sm text-gray-500 ">새 비밀번호</label>
           <input
             type="password"
-            className="w-full border rounded-lg p-2 mt-1"
+            className="w-full border rounded-lg p-2 mt-1  focus:outline-indigo-500"
             onChange={(e) => update("newPass", e.target.value)}
           />
         </div>
@@ -54,7 +54,7 @@ export default function SecurityTab() {
           <label className="text-sm text-gray-500">새 비밀번호 확인</label>
           <input
             type="password"
-            className="w-full border rounded-lg p-2 mt-1"
+            className="w-full border rounded-lg p-2 mt-1  focus:outline-indigo-500"
             onChange={(e) => update("confirmPass", e.target.value)}
           />
         </div>

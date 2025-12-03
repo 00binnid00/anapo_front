@@ -92,7 +92,7 @@ export default function NewReservationModal({
           <div className="col-span-2">
             <label className="text-gray-600 text-sm mb-1 block">메모</label>
             <textarea
-              className="w-full border rounded-lg p-2 h-28 text-sm"
+              className="w-full border rounded-lg p-2 h-28 text-sm  focus:outline-indigo-500"
               value={form.memo}
               onChange={(e) => update("memo", e.target.value)}
             />
